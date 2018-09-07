@@ -23,15 +23,23 @@ mongoose
 
 //ROUTES
 
-//GET PERSON
+//GET ALL PERSONS
 app.get('/person', (req, res) => {
   Person.find()
     .then(persons => res.json(persons))
-    .catch(err => res.status(404).json({nopersonsfount: 'No persons found'}));
+    .catch(err => res.status(404).json({nopersonsfound: 'No persons found'}));
 });
+
+//GET PERSON
+app.get('/person/:id', (req, res) => {
+  Person.findById(req.params.id)
+    .then(person => res.json(person))
+    .catch(err => res.status(404).json({nopersonsfound: 'Person not found'}))
+})
 
 //POST PERSON
 app.post('/person', (req, res) => {
+  
   const person = new Person({
     name: req.body.name,
     surname: req.body.surname,
@@ -57,7 +65,7 @@ app.patch('/person/:id', (req, res) => {
     {new: true}
   )
   .then(person => res.json(person))
-  .catch(err => res.status(404).json({nopersonsfount: 'No persons found'}));
+  .catch(err => res.status(404).json({nopersonsfount: 'Person not found'}));
 })
 
 //DELETE PERSON
@@ -70,7 +78,7 @@ app.delete('/person/:id', (req, res) => {
       }
       throw new Error;
     })
-    .catch(err => res.status(404).json({nopersonsfount: 'No persons found'}));
+    .catch(err => res.status(404).json({nopersonsfount: 'Person not found'}));
 });
 
 
