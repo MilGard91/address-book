@@ -8,7 +8,7 @@ import "./Form.css";
 
 // FUNCTION FOR CAPITALIZATION OF STRINGS
 function capitalize(string) {
-  return string[0].toUpperCase() + string.slice(1);
+    return string[0].toUpperCase() + string.slice(1);
 }
 const initialState = {
   name: "",
@@ -76,12 +76,10 @@ class PersonForm extends Component {
     // ADDING PERSON
     if (this.props.showAddForm) {
       this.props.onAddPerson(newPersonData);
-      this.props.onToggleAddForm();
     }
     // EDITING PERSON
     if (this.props.showUpdateForm) {
       this.props.onEditPerson(editPersonData);
-      this.props.onCloseUpdateForm();
     }
 
     //SETING BACK INITIAL STATE
@@ -109,6 +107,7 @@ class PersonForm extends Component {
                 value={name}
                 name="name"
                 onChange={this.onChange}
+                required
               />
             </Form.Field>
             <Form.Field>
@@ -119,6 +118,7 @@ class PersonForm extends Component {
                 value={surname}
                 name="surname"
                 onChange={this.onChange}
+                required
               />
             </Form.Field>
             <Form.Field>
@@ -129,6 +129,7 @@ class PersonForm extends Component {
                 value={city}
                 name="city"
                 onChange={this.onChange}
+                required
               />
             </Form.Field>
             <Form.Field>
@@ -139,6 +140,7 @@ class PersonForm extends Component {
                 value={address}
                 name="address"
                 onChange={this.onChange}
+                required
               />
             </Form.Field>
             <Form.Field>
@@ -148,6 +150,7 @@ class PersonForm extends Component {
                 value={phone}
                 name="phone"
                 onChange={this.onChange}
+                required
               />
             </Form.Field>
             <Button type="submit" color="teal">
@@ -168,9 +171,9 @@ PersonForm.propTypes = {
   onEditPerson: PropTypes.func.isRequired,
   onToggleAddForm: PropTypes.func.isRequired,
   onCloseUpdateForm: PropTypes.func.isRequired,
-  showUpdateForm: PropTypes.bool.isRequired,
-  showAddForm: PropTypes.bool.isRequired,
-  editPerson: PropTypes.object.isRequired
+  showUpdateForm: PropTypes.bool,
+  showAddForm: PropTypes.bool,
+  editPerson: PropTypes.object
 }
 //MAPING REDUX STATE TO PROPS
 const mapStateToProps = state => ({

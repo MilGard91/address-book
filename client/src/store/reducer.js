@@ -20,7 +20,9 @@ export default function(state = initialState, action) {
         ...state,
         persons: action.data,
         error: null,
-        loading: false
+        loading: false,
+        showUpdateForm: false,
+        showAddForm: false
       };
     // SORTING DATA IN STATE
     case actionTypes.SORT_TABLE:
@@ -44,7 +46,8 @@ export default function(state = initialState, action) {
     case actionTypes.TOGGLE_ADD_FORM:
       return {
         ...state,
-        showAddForm: !state.showAddForm
+        showAddForm: !state.showAddForm,
+        editPerson: null,
       };
     // CLOSE UPDATE FORM
     case actionTypes.CLOSE_UPDATE_FORM:
@@ -60,6 +63,16 @@ export default function(state = initialState, action) {
         editPerson: action.personData,
         showUpdateForm: true
       };
+    case actionTypes.GET_ERRORS:
+      return {
+        ...state,
+        errors: action.payload
+      }
+    case actionTypes.CLEAR_ERRORS:
+      return {
+        ...state,
+        errors: null
+      }
     default:
       return state;
   }

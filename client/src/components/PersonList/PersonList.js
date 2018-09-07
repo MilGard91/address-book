@@ -7,9 +7,10 @@ import {
   fetchPersons,
   sortTable,
   editPersonStart,
-  deletePerson
+  deletePerson,
+  clearErrors
 } from "../../store/actions";
-import { Table, Dimmer, Header, Loader } from "semantic-ui-react";
+import { Table, Dimmer, Header, Loader, Icon } from "semantic-ui-react";
 
 class PersonList extends Component {
   componentDidMount() {
@@ -17,7 +18,7 @@ class PersonList extends Component {
   }
 
   render() {
-    const { column, direction, persons, loading } = this.props;
+    const { column, direction, persons, loading, errors } = this.props;
     return (
       <div>
         <Dimmer active={loading} inverted page>
@@ -26,6 +27,13 @@ class PersonList extends Component {
             Fetching Data
           </Header>
         </Dimmer>
+        <Dimmer active={errors} onClickOutside={this.props.onClearErrors} page>
+          <Header as='h2' icon inverted>
+            <Icon name='bug' />            
+            Something went wrong
+          </Header>
+        </Dimmer>
+
         <Table selectable structured sortable color="teal">
           <Table.Header>
             <Table.Row>
@@ -109,24 +117,28 @@ PersonList.propTypes = {
   onEditPersonStart: PropTypes.func.isRequired,
   onDeletePerson: PropTypes.func.isRequired,
   onSortTable: PropTypes.func.isRequired,
-  persons: PropTypes.arrayOf(PropTypes.object).isRequired,
-  column: PropTypes.string.isRequired,
-  direction: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired
+  onClearErrors: PropTypes.func.isRequired,
+  persons: PropTypes.arrayOf(PropTypes.object),
+  column: PropTypes.string,
+  direction: PropTypes.string,
+  loading: PropTypes.bool,
+  errors: PropTypes.object,
 }
 const mapStateToProps = state => ({
   persons: state.persons,
   errors: state.errors,
   column: state.sortColumn,
   direction: state.direction,
-  loading: state.loading
+  loading: state.loading,
+  errors: state.errors
 });
 
 const mapDispatchToProps = dispatch => ({
   onFetchPerosns: () => dispatch(fetchPersons()),
   onEditPersonStart: person => dispatch(editPersonStart(person)),
   onDeletePerson: _id => dispatch(deletePerson(_id)),
-  onSortTable: sortColumn => dispatch(sortTable(sortColumn))
+  onSortTable: sortColumn => dispatch(sortTable(sortColumn)),
+  onClearErrors: () => dispatch(clearErrors())
 });
 
 export default connect(

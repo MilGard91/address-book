@@ -73,3 +73,8 @@ export const toggleAddForm = () => ({
 export const closeUpdateForm = () => ({
   type: actionTypes.CLOSE_UPDATE_FORM
 })
+
+// CLEAR ERRORS
+export const clearErrors = () => ({
+  type: actionTypes.CLEAR_ERRORS
+})
