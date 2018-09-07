@@ -1,10 +1,10 @@
-#Address book application
+# Address book application
 
-##Description
+## Description
 
 Add persons, their Name, Surname, City, Address, Phone. You can also edit and delete person.
 
-##Instalation
+## Instalation
 
 Download code, run in your terminal from the downloaded code folder:
 ```
