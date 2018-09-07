@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {toggleAddForm} from './store/actions';
 
 import PersonList from "./components/PersonList/PersonList";
-import Form from "./components/Form/Form";
+import PersonForm from "./components/Form/Form";
 import { Button } from "semantic-ui-react";
-import './App.css';
 
 class App extends Component {
   render() {
@@ -16,13 +16,14 @@ class App extends Component {
           <Button style={{marginTop: "1em"}} color="teal" onClick={() => this.props.onToggleAddForm()}>
             Add Person
           </Button>
-          <Form onCancel={this.toggleForm} />  
+          <PersonForm onCancel={this.toggleForm} />  
         </div>
     );
   }
 }
-
-
+App.propTypes = {
+  onToggleAddForm: PropTypes.func.isRequired
+}
 const mapDispachToProps = dispatch => ({
   onToggleAddForm: () => dispatch(toggleAddForm())
 })

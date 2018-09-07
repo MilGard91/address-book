@@ -1,23 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Form, Button, Modal } from "semantic-ui-react";
+import PropTypes from "prop-types";
 import * as actions from "../../store/actions";
+
+import { Form, Button, Modal } from "semantic-ui-react";
 import "./Form.css";
 
+// FUNCTION FOR CAPITALIZATION OF STRINGS
 function capitalize(string) {
   return string[0].toUpperCase() + string.slice(1);
 }
+const initialState = {
+  name: "",
+  surname: "",
+  city: "",
+  address: "",
+  phone: "",
+  _id: ""
+}
 
-class AddForm extends Component {
+class PersonForm extends Component {
   state = {
-    name: "",
-    surname: "",
-    city: "",
-    address: "",
-    phone: "",
-    _id: ""
+    ...initialState
   };
   componentWillReceiveProps(nextProps) {
+    //ADDING DATA OF PERSON FOR EDIT
     if (nextProps.editPerson) {
       this.setState({
         name: nextProps.editPerson.name,
@@ -29,17 +36,15 @@ class AddForm extends Component {
       });
     }
   }
+  // BINDING STATE AND INPUT
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  // CLOSE FORM
   onClick = () => {
+    //SETTING BACK INITIAL STATE
     this.setState({
-      name: "",
-      surname: "",
-      city: "",
-      address: "",
-      phone: "",
-      _id: ""
+      ...initialState
     });
     if (this.props.showAddForm) {
       this.props.onToggleAddForm();
@@ -48,9 +53,10 @@ class AddForm extends Component {
       this.props.onCloseUpdateForm();
     }
   };
+  //SUBMIT FORM
   onSubmit = e => {
     e.preventDefault();
-
+    // DATA FOR NEW PERSON
     const newPersonData = {
       name: capitalize(this.state.name),
       surname: capitalize(this.state.surname),
@@ -58,6 +64,7 @@ class AddForm extends Component {
       address: capitalize(this.state.address),
       phone: this.state.phone
     };
+    //DATA FOR EDIT PERSON
     const editPersonData = {
       name: capitalize(this.state.name),
       surname: capitalize(this.state.surname),
@@ -66,22 +73,20 @@ class AddForm extends Component {
       phone: capitalize(this.state.phone),
       _id: this.state._id
     };
+    // ADDING PERSON
     if (this.props.showAddForm) {
       this.props.onAddPerson(newPersonData);
       this.props.onToggleAddForm();
     }
+    // EDITING PERSON
     if (this.props.showUpdateForm) {
       this.props.onEditPerson(editPersonData);
       this.props.onCloseUpdateForm();
     }
 
+    //SETING BACK INITIAL STATE
     this.setState({
-      name: "",
-      surname: "",
-      city: "",
-      address: "",
-      phone: "",
-      _id: ""
+      ...initialState
     });
   };
 
@@ -99,7 +104,7 @@ class AddForm extends Component {
             <Form.Field>
               <label>Name</label>
               <input
-                className="AddForm"
+                className="FormInput"
                 placeholder="Name"
                 value={name}
                 name="name"
@@ -109,7 +114,7 @@ class AddForm extends Component {
             <Form.Field>
               <label>Surname</label>
               <input
-                className="AddForm"
+                className="FormInput"
                 placeholder="Surname"
                 value={surname}
                 name="surname"
@@ -119,7 +124,7 @@ class AddForm extends Component {
             <Form.Field>
               <label>City</label>
               <input
-                className="AddForm"
+                className="FormInput"
                 placeholder="City"
                 value={city}
                 name="city"
@@ -129,7 +134,7 @@ class AddForm extends Component {
             <Form.Field>
               <label>Address</label>
               <input
-                className="AddForm"
+                className="FormInput"
                 placeholder="Address"
                 value={address}
                 name="address"
@@ -157,11 +162,23 @@ class AddForm extends Component {
     );
   }
 }
+// PROPTYPES
+PersonForm.propTypes = {
+  onAddPerson: PropTypes.func.isRequired,
+  onEditPerson: PropTypes.func.isRequired,
+  onToggleAddForm: PropTypes.func.isRequired,
+  onCloseUpdateForm: PropTypes.func.isRequired,
+  showUpdateForm: PropTypes.bool.isRequired,
+  showAddForm: PropTypes.bool.isRequired,
+  editPerson: PropTypes.object.isRequired
+}
+//MAPING REDUX STATE TO PROPS
 const mapStateToProps = state => ({
   showUpdateForm: state.showUpdateForm,
   showAddForm: state.showAddForm,
   editPerson: state.editPerson
 });
+//MAPING DISPATCH TO PROPS
 const mapDispatchToProps = dispatch => ({
   onAddPerson: newPersonData => dispatch(actions.addPerson(newPersonData)),
   onEditPerson: editPersonData => dispatch(actions.editPerson(editPersonData)),
@@ -172,4 +189,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddForm);
+)(PersonForm);

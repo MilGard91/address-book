@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
+import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 
 import {
@@ -103,7 +104,16 @@ class PersonList extends Component {
     );
   }
 }
-
+PersonList.propTypes = {
+  onFetchPerosns: PropTypes.func.isRequired,
+  onEditPersonStart: PropTypes.func.isRequired,
+  onDeletePerson: PropTypes.func.isRequired,
+  onSortTable: PropTypes.func.isRequired,
+  persons: PropTypes.arrayOf(PropTypes.object).isRequired,
+  column: PropTypes.string.isRequired,
+  direction: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired
+}
 const mapStateToProps = state => ({
   persons: state.persons,
   errors: state.errors,
