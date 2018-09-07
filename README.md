@@ -8,7 +8,10 @@ Add persons, their Name, Surname, City, Address, Phone. You can also edit and de
 
 Download code, run in your terminal from the downloaded code folder:
 ```
-npm install and npm run client-install
+npm install
+```
+```
+npm run client-install
 ```
 
 To test the application run in your terminal from the downloaded code folder:
