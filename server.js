@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-// const path = require('path');
+const path = require('path');
 
 const { Person } = require('./models/Person');
 
@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 //DB Config
-const db = 'mongodb://localhost:27017/Person';
+const db = 'mongodb://compass:compass1@ds149732.mlab.com:49732/persons';
 
 // Connect to MongoDB
 mongoose
@@ -81,6 +81,15 @@ app.delete('/person/:id', (req, res) => {
     .catch(err => res.status(404).json({message: 'Person not found'}));
 });
 
+//Server static assets if in production
+if(process.env.NODE_ENV === 'production'){
+  // Set static folder
+  app.use(express.static(client/build));
+
+  app.get('*',(req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  });
+}
 
 // SERVER
 const port = 5000;

@@ -107,7 +107,7 @@ class PersonForm extends Component {
                 value={name}
                 name="name"
                 onChange={this.onChange}
-                pattern="[A-Za-z]"
+                pattern="[A-Za-z\s]{1,}"
                 required
               />
             </Form.Field>
@@ -119,7 +119,7 @@ class PersonForm extends Component {
                 value={surname}
                 name="surname"
                 onChange={this.onChange}
-                pattern="[A-Za-z]"
+                pattern="[A-Za-z\s]{1,}"
                 required
               />
             </Form.Field>
@@ -131,7 +131,7 @@ class PersonForm extends Component {
                 value={city}
                 name="city"
                 onChange={this.onChange}
-                pattern="[A-Za-z]"
+                pattern="[A-Za-z\s]{1,}"
                 required
               />
             </Form.Field>
@@ -143,7 +143,7 @@ class PersonForm extends Component {
                 value={address}
                 name="address"
                 onChange={this.onChange}
-                pattern="[A-Za-z]"
+                pattern="[A-Za-z0-9\s]{1,}"
                 required
               />
             </Form.Field>
@@ -155,6 +155,7 @@ class PersonForm extends Component {
                 name="phone"
                 onChange={this.onChange}
                 required
+                pattern = "[\/\+0-9\-]{6,}"
               />
             </Form.Field>
             <Button type="submit" color="teal">
